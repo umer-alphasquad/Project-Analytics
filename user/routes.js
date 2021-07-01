@@ -50,15 +50,18 @@ usersController
 			const user1 = await controller.listUsers(next);
 
 			let filterdata = user1.filter(item => (item.variant == vari))
-
-			let mappedata = filterdata.map((item) => item.actionType)
+			let mappedata = filterdata.map((item) => (item.uuid) )
 			console.log(mappedata)
-
+			//let mappedata = filterdata.map((item) => ({'ActionType':item.actionType , 'UserID':item.uuid}) )
+			//console.log(mappedata)
 			const uniqueActions = [...new Set(mappedata)]
-
 			console.log(uniqueActions)
 
-			res.status(200).json({ uniqueActions })
+			filteractiontypes = user1.filter(item => (item.variant == mappedata))
+			console.log(filteractiontypes)
+
+
+			res.status(200).json({ mappedata })
 		} catch (error) {
 			next(error);
 		}

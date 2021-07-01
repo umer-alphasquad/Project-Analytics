@@ -15,6 +15,6 @@ app.use((err, req, res, next) => {
       .send({ err: true, message: err.message })
       .end();
   });
-app.listen(3000, () => {
-	console.log("Server is on");
+  app.listen(process.env.port || 4000, function(){
+    console.log('Ready to Go!');
 });
