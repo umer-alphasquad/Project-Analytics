@@ -15,6 +15,6 @@ app.use((err, req, res, next) => {
       .send({ err: true, message: err.message })
       .end();
   });
-  app.listen(process.env.port || 4000, function(){
+  app.listen(process.env.port , function(){
     console.log('Ready to Go!');
 });
