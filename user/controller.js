@@ -16,7 +16,6 @@ const listUsers = async function (next) {
 				q.Lambda((x) => q.Get(x))
 			)
 		);
-
 		const data = result.data.map(item => item.data)
 		return data;
 	} catch (error) {

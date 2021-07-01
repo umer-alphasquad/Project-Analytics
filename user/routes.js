@@ -48,20 +48,10 @@ usersController
 		try {
 			vari = req.params.id
 			const user1 = await controller.listUsers(next);
-
 			let filterdata = user1.filter(item => (item.variant == vari))
-			let mappedata = filterdata.map((item) => (item.uuid) )
-			console.log(mappedata)
-			//let mappedata = filterdata.map((item) => ({'ActionType':item.actionType , 'UserID':item.uuid}) )
-			//console.log(mappedata)
-			const uniqueActions = [...new Set(mappedata)]
-			console.log(uniqueActions)
+			
 
-			filteractiontypes = user1.filter(item => (item.variant == mappedata))
-			console.log(filteractiontypes)
-
-
-			res.status(200).json({ mappedata })
+			res.status(200).json({ filterdata })
 		} catch (error) {
 			next(error);
 		}
@@ -69,7 +59,23 @@ usersController
 
 	})
 
+usersController
+	.get('/listUserActivity/:id', async (req, res, next) => {
+		try {
+			id = req.params.id
+			const user1 = await controller.listUsers(next);
+			let filterdata = user1.filter(item => (item.uuid == id))
+			let mappedata = filterdata.map((item) => ({
+				'ActionType': item.actionType,
+				'Variant': item.variant
+			}))
 
+			res.status(200).json({ mappedata })
+		} catch (error) {
+			next(error);
+		}
+
+	})
 
 usersController
 	.get('/listVariantUsers/:id', async (req, res, next) => {
@@ -111,5 +117,15 @@ let dataprocessing = async (filterdata) => {
 	console.log(uniqueActions)
 	return uniqueActions
 
+}
+const getActionByUserID = async (userid) => {
+	const user1 = await controller.listUsers();
+	let filterdata = user1.filter(item => (item.uuid == userid))
+	let mappedata = filterdata.map((item) => ({
+		'ActionType': item.actionType,
+		'Variant': item.variant
+	}))
+	
+	return mappedata;
 }
 module.exports = usersController
